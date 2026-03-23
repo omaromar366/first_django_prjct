@@ -18,6 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from hotel import views
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("rooms/", views.RoomAPIList.as_view()),
+    path("deleteroom/<int:pk>/", views.RoomAPIDestroy.as_view()),
+    path("createbook/", views.BookingAPICreate.as_view()),
+    path("booking/", views.BookingAPIList.as_view()),
+    path("deletebook/<int:pk>/", views.BookingAPIDestroy.as_view()),
 ]

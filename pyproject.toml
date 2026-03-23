@@ -3,7 +3,7 @@ name = "booking"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Your Name",email = "you@example.com"}
+    { name = "Omar", email = "omar_366@bk.ru" }
 ]
 readme = "README.md"
 requires-python = ">=3.14,<4.0"
@@ -14,11 +14,13 @@ dependencies = [
     "typing-extensions (>=4.15.0,<5.0.0)",
     "bandit (>=1.9.4,<2.0.0)",
     "radon (>=6.0.1,<7.0.0)",
-    "pre-commit (>=4.5.1,<5.0.0)"
+    "pre-commit (>=4.5.1,<5.0.0)",
+    "djangorestframework (>=3.16.1,<4.0.0)",
+    "djangorestframework-stubs (>=3.16.8,<4.0.0)"
 ]
 
 [tool.poetry]
-packages = [{include = "booking", from = "src"}]
+packages = [{ include = "booking", from = "src" }]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -45,7 +47,6 @@ indent-style = "space"
 line-ending = "lf"
 docstring-code-format = true
 
-
 [tool.mypy]
 python_version = "3.14"
 strict = true
@@ -54,6 +55,8 @@ warn_unused_configs = true
 check_untyped_defs = true
 disallow_incomplete_defs = true
 no_implicit_optional = true
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+mypy_path = "src"
 
 [tool.django-stubs]
 django_settings_module = "config.settings"
@@ -66,5 +69,7 @@ dev = [
     "bandit (>=1.9.4,<2.0.0)",
     "radon (>=6.0.1,<7.0.0)",
     "django-stubs[compatible-mypy] (>=5.2.9,<6.0.0)",
-    "pre-commit (>=4.5.1,<5.0.0)"
+    "pre-commit (>=4.5.1,<5.0.0)",
+    "pytest (>=9.0.2,<10.0.0)",
+    "pytest-django (>=4.12.0,<5.0.0)"
 ]
