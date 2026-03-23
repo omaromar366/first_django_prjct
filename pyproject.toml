@@ -16,7 +16,8 @@ dependencies = [
     "radon (>=6.0.1,<7.0.0)",
     "pre-commit (>=4.5.1,<5.0.0)",
     "djangorestframework (>=3.16.1,<4.0.0)",
-    "djangorestframework-stubs (>=3.16.8,<4.0.0)"
+    "djangorestframework-stubs (>=3.16.8,<4.0.0)",
+    "loguru (>=0.7.3,<0.8.0)"
 ]
 
 [tool.poetry]

@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.db.models import QuerySet
+from loguru import logger
 from rest_framework import filters, generics, status
 from rest_framework.exceptions import APIException, ValidationError
 from rest_framework.request import Request
@@ -17,12 +18,16 @@ class RoomAPIList(generics.ListCreateAPIView):  # type: ignore[type-arg]
     ordering = ("-created_at",)
     filter_backends = (filters.OrderingFilter,)
 
+    @logger.catch()
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        logger.info("Запрос на создание комнаты: {}", request.data)
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         if serializer.instance is not None:
             created_object = serializer.instance
+            logger.success("Комната создана: room_id={}", created_object.id)
             return Response({"room_id": created_object.id}, status=status.HTTP_201_CREATED)
         raise APIException("Не удалось создать объект")
 
@@ -31,17 +36,31 @@ class RoomAPIDestroy(generics.RetrieveDestroyAPIView):  # type: ignore[type-arg]
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
+    @logger.catch()
+    def destroy(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        room = self.get_object()
+        logger.info("Удаление комнаты: room_id={}", room.id)
+        room_id = room.id
+
+        self.perform_destroy(room)
+
+        logger.success("Комната удалена: room_id={}", room_id)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class BookingAPICreate(generics.CreateAPIView):  # type: ignore[type-arg]
     queryset = Booking.objects.all()
     serializer_class = BookingSerializerCreate
 
+    @logger.catch(reraise=True)
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        logger.info("Запрос на создание брони: {}", request.data)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         if serializer.instance is not None:
             created_object = serializer.instance
+            logger.success("Бронь создана: booking_id={}", created_object.id)
             return Response({"booking_id": created_object.id}, status=status.HTTP_201_CREATED)
         raise APIException("Не удалось создать объект")
 
@@ -51,46 +70,35 @@ class BookingAPIList(generics.ListAPIView):  # type: ignore[type-arg]
 
     def get_queryset(self) -> QuerySet[Booking]:
         room_idd = self.request.query_params.get("room_id")
+        logger.info("Получение списка броней, room_id={}", room_idd)
 
         if not room_idd:
+            logger.warning("room_id не передан")
             raise ValidationError({"room_id": "обязательное поле"})
         try:
             room_id = int(room_idd)
         except ValueError:
+            logger.error("room_id должен быть числом: {}", room_idd)
             raise ValidationError({"room_id": "должен быть числом"}) from None
-
-        return Booking.objects.filter(room_id=room_id).order_by("date_start")
+        queryset = Booking.objects.filter(room_id=room_id).order_by("date_start")
+        logger.info("Найдено броней: {} для room_id={}", queryset.count(), room_id)
+        return queryset
 
 
 class BookingAPIDestroy(generics.RetrieveDestroyAPIView):  # type: ignore[type-arg]
     queryset = Booking.objects.all()
     serializer_class = BookingSerializerList
 
+    @logger.catch(reraise=True)
+    def destroy(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        booking = self.get_object()
+        logger.info("Удаление брони: booking_id={}", booking.id)
+        booking_id = booking.id
 
-# class RoomCreateAPIView(APIView):
-#     def post(self, request):
-#         serializer = RoomSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#
-#     def get(self, request):
-#         rooms = Room.objects.all()
-#         sort_by = request.query_params.get('sort_by')
-#         order = request.query_params.get('order')
-#         allowed_fields = ['created_at', 'price']
-#         order = (order or "").lower()
-#         if sort_by and sort_by in allowed_fields:
-#             if order == 'desc':
-#                 field = '-' + sort_by
-#             else:
-#                 field = sort_by
-#             rooms = rooms.order_by(field)
-#
-#         serializer = RoomSerializer(rooms, many=True)
-#         return Response(serializer.data)
-#
-#     def delete(self, request):
+        self.perform_destroy(booking)
+
+        logger.success("Бронь удалена: booking_id={}", booking_id)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # Create your views here.
