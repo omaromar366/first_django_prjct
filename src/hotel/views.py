@@ -20,14 +20,14 @@ class RoomAPIList(generics.ListCreateAPIView):  # type: ignore[type-arg]
 
     @logger.catch()
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        logger.info("Запрос на создание комнаты: {}", request.data)
+        logger.info("Запрос на создание номера: {}", request.data)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         if serializer.instance is not None:
             created_object = serializer.instance
-            logger.success("Комната создана: room_id={}", created_object.id)
+            logger.success("Номер создан: room_id={}", created_object.id)
             return Response({"room_id": created_object.id}, status=status.HTTP_201_CREATED)
         raise APIException("Не удалось создать объект")
 
@@ -39,12 +39,12 @@ class RoomAPIDestroy(generics.RetrieveDestroyAPIView):  # type: ignore[type-arg]
     @logger.catch()
     def destroy(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         room = self.get_object()
-        logger.info("Удаление комнаты: room_id={}", room.id)
+        logger.info("Удаление номера: room_id={}", room.id)
         room_id = room.id
 
         self.perform_destroy(room)
 
-        logger.success("Комната удалена: room_id={}", room_id)
+        logger.success("Номер удален: room_id={}", room_id)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -54,13 +54,13 @@ class BookingAPICreate(generics.CreateAPIView):  # type: ignore[type-arg]
 
     @logger.catch(reraise=True)
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        logger.info("Запрос на создание брони: {}", request.data)
+        logger.info("Запрос на создание бронирования: {}", request.data)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         if serializer.instance is not None:
             created_object = serializer.instance
-            logger.success("Бронь создана: booking_id={}", created_object.id)
+            logger.success("Бронирование создано: booking_id={}", created_object.id)
             return Response({"booking_id": created_object.id}, status=status.HTTP_201_CREATED)
         raise APIException("Не удалось создать объект")
 
@@ -70,7 +70,7 @@ class BookingAPIList(generics.ListAPIView):  # type: ignore[type-arg]
 
     def get_queryset(self) -> QuerySet[Booking]:
         room_idd = self.request.query_params.get("room_id")
-        logger.info("Получение списка броней, room_id={}", room_idd)
+        logger.info("Получение списка бронирований, room_id={}", room_idd)
 
         if not room_idd:
             logger.warning("room_id не передан")
@@ -81,7 +81,7 @@ class BookingAPIList(generics.ListAPIView):  # type: ignore[type-arg]
             logger.error("room_id должен быть числом: {}", room_idd)
             raise ValidationError({"room_id": "должен быть числом"}) from None
         queryset = Booking.objects.filter(room_id=room_id).order_by("date_start")
-        logger.info("Найдено броней: {} для room_id={}", queryset.count(), room_id)
+        logger.info("Найдено бронирований: {} для room_id={}", queryset.count(), room_id)
         return queryset
 
 
@@ -92,12 +92,12 @@ class BookingAPIDestroy(generics.RetrieveDestroyAPIView):  # type: ignore[type-a
     @logger.catch(reraise=True)
     def destroy(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         booking = self.get_object()
-        logger.info("Удаление брони: booking_id={}", booking.id)
+        logger.info("Удаление бронирования: booking_id={}", booking.id)
         booking_id = booking.id
 
         self.perform_destroy(booking)
 
-        logger.success("Бронь удалена: booking_id={}", booking_id)
+        logger.success("Бронирование удалено: booking_id={}", booking_id)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

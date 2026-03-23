@@ -9,7 +9,7 @@ def setup_logging() -> None:
     env = os.getenv("APP_ENV", "dev")  # dev или prod
     level = os.getenv("LOG_LEVEL", "INFO")
 
-    logger.remove()  # убираем дефолтный sink
+    logger.remove()
 
     BASE_DIR = Path(__file__).resolve().parent.parent
     LOG_DIR = BASE_DIR / "logs"
