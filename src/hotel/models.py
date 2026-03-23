@@ -17,6 +17,3 @@ class Booking(models.Model):
 
     def __str__(self) -> str:
         return f"Booking {self.id} - {self.room}"
-
-
-# Create your models here.

@@ -13,7 +13,7 @@ class RoomSerializer(serializers.ModelSerializer[Room]):
 
     def validate_price(self, value: int) -> int:
         if value <= 0:
-            raise serializers.ValidationError("Цена должна быть больше 0")
+            raise serializers.ValidationError("Цена за номер должна быть больше 0")
         return value
 
 
@@ -41,6 +41,6 @@ class BookingSerializerCreate(serializers.ModelSerializer[Booking]):
         date2 = data.get("date_end")
         if date1 is not None and date2 is not None and date1 > date2:
             raise serializers.ValidationError(
-                "Дата начала бронирования не может быть позже окончания"
+                "Дата начала бронирования не должна быть позже даты окончания."
             )
         return data
