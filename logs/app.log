@@ -1,0 +1,205 @@
+2026-03-23 16:02:16.905 | INFO     | hotel.views:create:57 - Запрос на создание брони: {'room': 8, 'date_start': '2026-04-01', 'date_end': '2026-04-03'}
+2026-03-23 16:02:16.907 | ERROR    | rest_framework.generics:post:194 - An error has been caught in function 'post', process 'MainProcess' (13769), thread 'Thread-2 (process_request_thread)' (6177828864):
+Traceback (most recent call last):
+
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/threading.py", line 1044, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x107d6a610>
+    └ <Thread(Thread-2 (process_request_thread), started daemon 6177828864)>
+
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/threading.py", line 1082, in _bootstrap_inner
+    self._context.run(self.run)
+    │    │        │   │    └ <function Thread.run at 0x107d6a2a0>
+    │    │        │   └ <Thread(Thread-2 (process_request_thread), started daemon 6177828864)>
+    │    │        └ <method 'run' of '_contextvars.Context' objects>
+    │    └ <_contextvars.Context object at 0x10a6f2780>
+    └ <Thread(Thread-2 (process_request_thread), started daemon 6177828864)>
+
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/threading.py", line 1024, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-2 (process_request_thread), started daemon 6177828864)>
+    │    │        │    └ (<socket.socket fd=24, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000), raddr=('127.0.0.1', 59167)>, ('127.0.0.1', 59167))
+    │    │        └ <Thread(Thread-2 (process_request_thread), started daemon 6177828864)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x10a3c7a10>>
+    └ <Thread(Thread-2 (process_request_thread), started daemon 6177828864)>
+
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 59167)
+    │    │              └ <socket.socket fd=24, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000), raddr=('127.0.0.1', 59167)>
+    │    └ <function BaseServer.finish_request at 0x10968fd70>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x10a3c7a10>
+
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x10a3c7a10>
+    │    │                   │        └ ('127.0.0.1', 59167)
+    │    │                   └ <socket.socket fd=24, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000), raddr=('127.0.0.1', 59167)>
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x10a3c7a10>
+
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 766, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x109db1bc0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x10a4eb4d0>
+
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/servers/basehttp.py", line 221, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x109db1c70>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x10a4eb4d0>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/servers/basehttp.py", line 248, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x109db0bf0>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x10a3c7a10>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x10a4eb4d0>
+    │       └ <function BaseHandler.run at 0x109d778a0>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x10a4eb610>
+
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/wsgiref/handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x109d77cc0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x10a4eb610>
+    │    │        │           │    └ {'COMMAND_MODE': 'unix2003', 'SHELL': '/bin/zsh', 'TMPDIR': '/var/folders/gl/tvt6gd0n1ps3x9wvt4sgz2_w0000gn/T/', '__CFBundleI...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x10a4eb610>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x10a3c7e00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x10a4eb610>
+
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/contrib/staticfiles/handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x10a4eb610>>
+           │    │           └ {'COMMAND_MODE': 'unix2003', 'SHELL': '/bin/zsh', 'TMPDIR': '/var/folders/gl/tvt6gd0n1ps3x9wvt4sgz2_w0000gn/T/', '__CFBundleI...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x1096e0ad0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x10a3c7e00>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/createbook/'>
+               │    └ <function BaseHandler.get_response at 0x109d5d0c0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x1096e0ad0>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/createbook/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x10972c7d0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x1096e0ad0>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/createbook/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/createbook/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x10972cb40>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/createbook/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/createbook/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x10972cbf0>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/createbook/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/createbook/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x10972cca0>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/createbook/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/createbook/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x10972cd50>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/createbook/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/createbook/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x10972ce00>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/createbook/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/createbook/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x10972ceb0>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/createbook/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/createbook/'>
+               │           │    └ <function BaseHandler._get_response at 0x10972c3b0>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/createbook/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x1096e0ad0>>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/createbook/'>
+               └ <function View.as_view.<locals>.view at 0x10a370720>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           │         │         │       └ {}
+           │         │         └ ()
+           │         └ <WSGIRequest: POST '/createbook/'>
+           └ <function View.as_view.<locals>.view at 0x10a370670>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           │    │        │         │       └ {}
+           │    │        │         └ ()
+           │    │        └ <WSGIRequest: POST '/createbook/'>
+           │    └ <function APIView.dispatch at 0x10a353690>
+           └ <hotel.views.BookingAPICreate object at 0x10a4cd6a0>
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               │       │         │       └ {}
+               │       │         └ ()
+               │       └ <rest_framework.request.Request: POST '/createbook/'>
+               └ <bound method CreateAPIView.post of <hotel.views.BookingAPICreate object at 0x10a4cd6a0>>
+> File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/rest_framework/generics.py", line 194, in post
+    return self.create(request, *args, **kwargs)
+           │    │      │         │       └ {}
+           │    │      │         └ ()
+           │    │      └ <rest_framework.request.Request: POST '/createbook/'>
+           │    └ <function BookingAPICreate.create at 0x10a361b10>
+           └ <hotel.views.BookingAPICreate object at 0x10a4cd6a0>
+
+  File "/Users/omar/PycharmProjects/Python_django/booking/src/hotel/views.py", line 59, in create
+    serializer.is_valid(raise_exception=True)
+    │          └ <function BaseSerializer.is_valid at 0x10a2f9e80>
+    └ BookingSerializerCreate(context={'request': <rest_framework.request.Request: POST '/createbook/'>, 'format': None, 'view': <h...
+
+  File "/Users/omar/Library/Caches/pypoetry/virtualenvs/booking-4LhpJXFX-py3.14/lib/python3.14/site-packages/rest_framework/serializers.py", line 233, in is_valid
+    raise ValidationError(self.errors)
+          │               │    └ <property object at 0x10a2d3fb0>
+          │               └ BookingSerializerCreate(context={'request': <rest_framework.request.Request: POST '/createbook/'>, 'format': None, 'view': <h...
+          └ <class 'rest_framework.exceptions.ValidationError'>
+
+rest_framework.exceptions.ValidationError: {'room': [ErrorDetail(string='Недопустимый первичный ключ "8" - объект не существует.', code='does_not_exist')]}
+2026-03-23 16:02:34.344 | INFO     | hotel.views:create:23 - Запрос на создание комнаты: {'description': 'test', 'price': 100}
+2026-03-23 16:02:34.346 | SUCCESS  | hotel.views:create:30 - Комната создана: room_id=10
